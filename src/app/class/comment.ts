@@ -3,16 +3,16 @@ export class Comment {
   user: User;
   message: string;
   date: number;
-  key?: string;
+  key: string;
   isEdit: boolean;
 
   constructor(value: any) {
     this.user = value.user;
     this.message = value.message;
     this.date = value.date || Date.now();
+    // this.key = value.key;
     if (value.key) {
       this.key = value.key;
     }
-    this.isEdit = false;
   }
 }

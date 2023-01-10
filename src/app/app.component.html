@@ -19,7 +19,11 @@
                     title="編集"
                     (click)="comment.isEdit = !comment.isEdit"
                   ></i>
-                  <i class="fa fa-trash ml-2" title="削除"></i>
+                  <i
+                    class="fa fa-trash ml-2"
+                    title="削除"
+                    (click)="deleteComment(comment)"
+                  ></i>
                 </ng-container>
               </h4>
               <small class="media-date">{{ comment.date | commentDate }}</small>
@@ -36,29 +40,23 @@
                 ></textarea>
               </div>
               <div class="edit-buttons">
-                <button class="btn btn-success btn-sm">保存</button>
-                <button class="btn btn-warning btn-sm">キャンセル</button>
+                <button
+                  class="btn btn-success btn-sm"
+                  (click)="updateComment(comment)"
+                >
+                  保存
+                </button>
+                <button
+                  class="btn btn-warning btn-sm"
+                  (click)="comment.isEdit = false"
+                >
+                  キャンセル
+                </button>
               </div>
             </ng-container>
           </div>
           <div *ngIf="comment.user.uid === currentUser.uid" class="media-right">
             <a href="#" class="icon">{{ comment.user.initial }}</a>
-          </div>
-        </div>
-      </div>
-      <div
-        *ngIf="item$ | async as item"
-        class="list-group-item list-group-item-action flex-column align-items-start border-0"
-      >
-        <div class="media d-flex">
-          <div *ngIf="item.uid !== currentUser.uid" class="media-left">
-            <a href="#" class="icon"></a>
-          </div>
-          <div class="media-body flex-grow-1">
-            <div class="d-flex w-100 justify-content-between">
-              <h4 class="media-heading">{{ item.name }}</h4>
-            </div>
-            <pre>{{ item.message }}</pre>
           </div>
         </div>
       </div>
