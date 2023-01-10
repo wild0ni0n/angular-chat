@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { CommentDatePipe } from './pipes/comment-date.pipe';
 import { AngularFireModule } from '@angular/fire/compat';
-import { environment } from '../environments/enviroment';
+import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
