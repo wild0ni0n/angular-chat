@@ -2,7 +2,7 @@
   <section class="chat">
     <div class="chat-timeline">
       <div
-        *ngFor="let comment of comments"
+        *ngFor="let comment of comments$ | async"
         class="list-group-item list-group-item-action flex-column align-items-start border-0"
       >
         <div class="media d-flex">
@@ -21,6 +21,22 @@
           </div>
         </div>
       </div>
+      <div
+        *ngIf="item$ | async as item"
+        class="list-group-item list-group-item-action flex-column align-items-start border-0"
+      >
+        <div class="media d-flex">
+          <div *ngIf="item.uid !== currentUser.uid" class="media-left">
+            <a href="#" class="icon"></a>
+          </div>
+          <div class="media-body flex-grow-1">
+            <div class="d-flex w-100 justify-content-between">
+              <h4 class="media-heading">{{ item.name }}</h4>
+            </div>
+            <pre>{{ item.message }}</pre>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -29,7 +45,7 @@
       <div class="form-header d-flex flex-row-reverse mb-2">
         <span class="input-group-btn"
           ><button
-            (click)="addComment(comment); comment = ''"
+            (click)="addComment(comment)"
             class="btn btn-info btn-sm"
             type="submit"
             tabindex="2"

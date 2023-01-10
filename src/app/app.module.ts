@@ -4,6 +4,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { CommentDatePipe } from './pipes/comment-date.pipe';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from '../environments/enviroment';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
 @NgModule({
   declarations: [
@@ -12,7 +16,10 @@ import { CommentDatePipe } from './pipes/comment-date.pipe';
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -28,7 +28,12 @@
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "firebase",
+              "@firebase/auth",
+              "@hirebase/database"
+            ]
           },
           "configurations": {
             "production": {
