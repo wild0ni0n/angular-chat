@@ -5,9 +5,8 @@ import { map } from 'rxjs/operators';
 
 import { Comment } from '../class/comment';
 import { User } from '../class/user';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
-const CURRENT_USER: User = new User(1, '五十嵐 洋平');
-const ANOTHER_USER: User = new User(2, "竹内 健司");
 
 @Component({
   selector: 'ac-chat',
@@ -15,14 +14,23 @@ const ANOTHER_USER: User = new User(2, "竹内 健司");
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent {
-  title = "angular-chat";
   comments$: Observable<Comment[]>;
   commentsRef: AngularFireList<Comment>
-  currentUser = CURRENT_USER;
+  currentUser: User;
   comment = '';
 
-  constructor(private db: AngularFireDatabase) {
+  constructor(
+    private afAuth: AngularFireAuth,
+    private db: AngularFireDatabase) {
     this.commentsRef = db.list('/comments');
+  }
+
+  ngOnInit(): void {
+    this.afAuth.authState.subscribe((user: firebase.default.User | null) => {
+      if (user) {
+        this.currentUser = new User(user);
+      }
+    });
     this.comments$ = this.commentsRef.snapshotChanges()
       .pipe(
         map((snapshots: SnapshotAction<Comment>[]) => {
@@ -31,10 +39,8 @@ export class ChatComponent {
             return new Comment({ key: snapshot.payload.key, ...value });
           });
         })
-      )
+      );
   }
-
-  ngOnInit() { }
 
   addComment(comment: string): void {
     if (comment) {
