@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { UserService } from '../../core/services/user.service';
+import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'ac-new-user',
@@ -7,4 +10,13 @@ import { Component } from '@angular/core';
 })
 export class NewUserComponent {
 
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) { }
+
+  submit(form: NgForm): void {
+    this.userService.update(form.value)
+      .then(() => this.router.navigateByUrl('/'));
+  }
 }
