@@ -1,12 +1,12 @@
 export class User {
 
-  displayName: string | null;
-  email: string | null;
-  photoURL: string | null;
+  displayName: string;
+  email: string;
+  photoURL: string;
   uid: string;
-  initial: string | null;
+  initial: string;
 
-  constructor(user: firebase.default.User) {
+  constructor(user: User | firebase.default.User) {
     this.uid = user.uid;
     this.displayName = user.displayName;
     this.email = user.email;
