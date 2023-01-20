@@ -17,6 +17,7 @@ export class ChatComponent {
   comments$: Observable<Comment[]>;
   commentsRef: AngularFireList<Comment>
   currentUser: User;
+  currentUser$: Observable<User>;
   comment = '';
 
   constructor(
@@ -26,11 +27,16 @@ export class ChatComponent {
   }
 
   ngOnInit(): void {
-    this.afAuth.authState.subscribe((user: firebase.default.User | null) => {
-      if (user) {
-        this.currentUser = new User(user);
-      }
-    });
+    this.currentUser$ = this.afAuth.authState.pipe(
+      map((user: firebase.default.User | null) => {
+        if (user) {
+          this.currentUser = new User(user);
+          return this.currentUser;
+        }
+        return null;
+      })
+    );
+
     this.comments$ = this.commentsRef.snapshotChanges()
       .pipe(
         map((snapshots: SnapshotAction<Comment>[]) => {
